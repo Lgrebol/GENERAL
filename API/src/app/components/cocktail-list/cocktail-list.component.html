@@ -1,6 +1,12 @@
-<ul>
+<h1>Tots els Còctels</h1>
+<ul *ngIf="cocktails.length > 0; else noCocktails">
   <li *ngFor="let cocktail of cocktails">
-    <img [src]="cocktail.strDrinkThumb" alt="{{ cocktail.strDrink }}" width="50" height="50" />
-    {{ cocktail.strDrink }}
+    <h2>{{ cocktail.strDrink }}</h2>
+    <img *ngIf="cocktail.strDrinkThumb" [src]="cocktail.strDrinkThumb" alt="{{ cocktail.strDrink }}" width="100">
+    <p>{{ cocktail.strInstructions }}</p>
   </li>
 </ul>
+
+<ng-template #noCocktails>
+  <p>No hi ha còctels disponibles.</p>
+</ng-template>

@@ -1,38 +1,23 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { CocktailListComponent } from './cocktail-list.component';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { CocktailService } from '../../services/cocktail.service';
-import { of } from 'rxjs';
 
-describe('CocktailListComponent', () => {
-  let component: CocktailListComponent;
-  let fixture: ComponentFixture<CocktailListComponent>;
-  let mockCocktailService: jasmine.SpyObj<CocktailService>;
+@Component({
+  selector: 'app-cocktail-list',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './cocktail-list.component.html',
+  styleUrls: ['./cocktail-list.component.css'],
+})
+export class CocktailListComponent implements OnInit {
+  cocktails: any[] = [];
 
-  beforeEach(async () => {
-    mockCocktailService = jasmine.createSpyObj('CocktailService', ['getMargaritaCocktails']);
-    mockCocktailService.getMargaritaCocktails.and.returnValue(
-      of({
-        drinks: [
-          { strDrink: 'Margarita', strDrinkThumb: 'url1', idDrink: '1' },
-          { strDrink: 'Blue Margarita', strDrinkThumb: 'url2', idDrink: '2' },
-        ],
-      })
-    );
+  constructor(private cocktailService: CocktailService) {}
 
-    await TestBed.configureTestingModule({
-      imports: [CocktailListComponent, HttpClientTestingModule], 
-      providers: [{ provide: CocktailService, useValue: mockCocktailService }],
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(CocktailListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should display a list of margarita cocktails', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelectorAll('li').length).toBe(2);
-    expect(compiled.querySelector('li')?.textContent).toContain('Margarita');
-  });
-});
+  ngOnInit(): void {
+    this.cocktailService.getAllCocktails().subscribe((data) => {
+      console.log('Dades de tots els còctels:', data);
+      this.cocktails = data.drinks;
+    });
+  }
+}
