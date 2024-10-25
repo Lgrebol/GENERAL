@@ -22,16 +22,16 @@ describe('CocktailService', () => {
         { strDrink: 'Blue Margarita', strDrinkThumb: 'url2', idDrink: '2' },
       ],
     };
-
-    service.getMargaritaCocktails().subscribe((cocktails) => {
-      expect(cocktails.length).toBe(2);
-      expect(cocktails[0].strDrink).toContain('Margarita');
+  
+    service.getMargaritaCocktails().subscribe((data) => {
+      expect(data.drinks.length).toBe(2); // Accedeix directament a data.drinks
+      expect(data.drinks[0].strDrink).toContain('Margarita');
     });
-
+  
     const req = httpMock.expectOne('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita');
     expect(req.request.method).toBe('GET');
     req.flush(mockResponse);
-  });
+  }); 
 
   afterEach(() => {
     httpMock.verify();

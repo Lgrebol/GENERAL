@@ -9,7 +9,7 @@ describe('CocktailListComponent', () => {
   let fixture: ComponentFixture<CocktailListComponent>;
   let mockCocktailService: jasmine.SpyObj<CocktailService>;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     mockCocktailService = jasmine.createSpyObj('CocktailService', ['getMargaritaCocktails']);
     mockCocktailService.getMargaritaCocktails.and.returnValue(
       of({
@@ -20,9 +20,8 @@ describe('CocktailListComponent', () => {
       })
     );
 
-    TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      declarations: [CocktailListComponent],
+    await TestBed.configureTestingModule({
+      imports: [CocktailListComponent, HttpClientTestingModule], 
       providers: [{ provide: CocktailService, useValue: mockCocktailService }],
     }).compileComponents();
 

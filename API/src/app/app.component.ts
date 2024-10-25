@@ -9,5 +9,5 @@ import { CocktailListComponent } from './components/cocktail-list/cocktail-list.
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'API';
+  title = 'Margarita Cocktails';
 }

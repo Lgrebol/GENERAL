@@ -1,38 +1,30 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AppComponent } from './app.component'; // Update the path as necessary
-import { CocktailService } from './services/cocktail.service'; // Update the path as necessary
+import { TestBed } from '@angular/core/testing';
+import { AppComponent } from './app.component';
+import { CocktailListComponent } from './components/cocktail-list/cocktail-list.component';
 
 describe('AppComponent', () => {
-  let component: AppComponent;
-  let fixture: ComponentFixture<AppComponent>;
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        AppComponent // Import the standalone component here
-      ],
-      providers: [CocktailService]
+      imports: [AppComponent, CocktailListComponent],
     }).compileComponents();
   });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(AppComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
   it('should create the app', () => {
-    expect(component).toBeTruthy();
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    expect(app).toBeTruthy();
   });
 
-  it("should have the 'API' title", () => {
-    expect(component.title).toEqual('API');
+  it(`should have the title 'Margarita Cocktails'`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    expect(app.title).toEqual('Margarita Cocktails');
   });
 
   it('should render title', () => {
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('API');
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('h1')?.textContent).toContain('Margarita Cocktails');
   });
 });
