@@ -1,5 +1,6 @@
 // src/app/components/cocktail-list/cocktail-list.component.spec.ts
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CocktailListComponent } from './cocktail-list.component';
 import { CocktailService } from '../../services/cocktail.service';
 import { of } from 'rxjs';
@@ -15,7 +16,7 @@ describe('CocktailListComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      declarations: [CocktailListComponent],
+      imports: [HttpClientTestingModule, CocktailListComponent], 
       providers: [{ provide: CocktailService, useValue: cocktailServiceMock }]
     }).compileComponents();
 

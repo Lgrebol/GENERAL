@@ -1,1 +1,5 @@
-<p>cocktail-list works!</p>
+<!-- src/app/components/cocktail-list/cocktail-list.component.html -->
+<div *ngFor="let cocktail of cocktails" class="cocktail-item">
+    <h2 class="cocktail-name">{{ cocktail.strDrink }}</h2>
+    <img [src]="cocktail.strDrinkThumb" alt="{{ cocktail.strDrink }}" class="cocktail-image" />
+</div>  
