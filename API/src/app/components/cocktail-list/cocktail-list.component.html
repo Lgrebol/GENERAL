@@ -1,6 +1,6 @@
-<!-- src/app/components/cocktail-list/cocktail-list.component.html -->
-<div *ngFor="let cocktail of cocktails" class="cocktail">
-    <p class="cocktail-name">{{ cocktail.strDrink }}</p>
-    <img [src]="cocktail.strDrinkThumb" alt="{{ cocktail.strDrink }}" />
-  </div>
-  
+<ul>
+  <li *ngFor="let cocktail of cocktails">
+    <img [src]="cocktail.strDrinkThumb" alt="{{ cocktail.strDrink }}" width="50" height="50" />
+    {{ cocktail.strDrink }}
+  </li>
+</ul>

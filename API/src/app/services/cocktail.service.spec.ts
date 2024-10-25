@@ -9,25 +9,31 @@ describe('CocktailService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [CocktailService]
+      providers: [CocktailService],
     });
     service = TestBed.inject(CocktailService);
     httpMock = TestBed.inject(HttpTestingController);
   });
 
-  afterEach(() => {
-    httpMock.verify();
-  });
+  it('should fetch cocktails containing "margarita" in the name', () => {
+    const mockResponse = {
+      drinks: [
+        { strDrink: 'Margarita', strDrinkThumb: 'url1', idDrink: '1' },
+        { strDrink: 'Blue Margarita', strDrinkThumb: 'url2', idDrink: '2' },
+      ],
+    };
 
-  it('should fetch cocktails from the API', () => {
-    const mockCocktails = [{ idDrink: '11007', strDrink: 'Margarita', strDrinkThumb: 'image_url' }];
-
-    service.getCocktails().subscribe((cocktails) => {
-      expect(cocktails).toEqual(mockCocktails);
+    service.getMargaritaCocktails().subscribe((cocktails) => {
+      expect(cocktails.length).toBe(2);
+      expect(cocktails[0].strDrink).toContain('Margarita');
     });
 
-    const req = httpMock.expectOne('https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail');
+    const req = httpMock.expectOne('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita');
     expect(req.request.method).toBe('GET');
-    req.flush(mockCocktails);
+    req.flush(mockResponse);
+  });
+
+  afterEach(() => {
+    httpMock.verify();
   });
 });

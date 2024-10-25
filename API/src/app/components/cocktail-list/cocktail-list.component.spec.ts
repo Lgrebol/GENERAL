@@ -7,26 +7,33 @@ import { of } from 'rxjs';
 describe('CocktailListComponent', () => {
   let component: CocktailListComponent;
   let fixture: ComponentFixture<CocktailListComponent>;
-  let cocktailService: CocktailService;
+  let mockCocktailService: jasmine.SpyObj<CocktailService>;
 
   beforeEach(() => {
-    const cocktailServiceMock = {
-      getCocktails: () => of([{ idDrink: '11007', strDrink: 'Margarita', strDrinkThumb: 'image_url' }])
-    };
+    mockCocktailService = jasmine.createSpyObj('CocktailService', ['getMargaritaCocktails']);
+    mockCocktailService.getMargaritaCocktails.and.returnValue(
+      of({
+        drinks: [
+          { strDrink: 'Margarita', strDrinkThumb: 'url1', idDrink: '1' },
+          { strDrink: 'Blue Margarita', strDrinkThumb: 'url2', idDrink: '2' },
+        ],
+      })
+    );
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, CocktailListComponent], // Import component as standalone
-      providers: [{ provide: CocktailService, useValue: cocktailServiceMock }]
+      imports: [HttpClientTestingModule],
+      declarations: [CocktailListComponent],
+      providers: [{ provide: CocktailService, useValue: mockCocktailService }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CocktailListComponent);
     component = fixture.componentInstance;
-    cocktailService = TestBed.inject(CocktailService);
     fixture.detectChanges();
   });
 
-  it('should display a list of cocktails', () => {
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.cocktail-name').textContent).toContain('Margarita');
+  it('should display a list of margarita cocktails', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelectorAll('li').length).toBe(2);
+    expect(compiled.querySelector('li')?.textContent).toContain('Margarita');
   });
 });
