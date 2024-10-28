@@ -1,21 +1,7 @@
-<div class="cocktail-container" *ngIf="cocktails && cocktails.length">
-  <div *ngFor="let cocktail of cocktails" class="cocktail-card">
-    <h2>{{ cocktail.strDrink }}</h2>
-    <img [src]="cocktail.strDrinkThumb" alt="{{ cocktail.strDrink }}" />
-    <p><strong>Category:</strong> {{ cocktail.strCategory }}</p>
-    <p><strong>Glass:</strong> {{ cocktail.strGlass }}</p>
-    <h3>Ingredients:</h3>
-    <ul>
-      <li *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">
-        <span *ngIf="cocktail['strIngredient' + i]">
-          {{ cocktail['strIngredient' + i] }} - {{ cocktail['strMeasure' + i] || '' }}
-        </span>
-      </li>
-    </ul>
-    <h3>Instructions:</h3>
-    <p>{{ cocktail.strInstructions }}</p>
+<div *ngFor="let cocktail of cocktails | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
+  <div (click)="goToDetail(cocktail.idDrink)" class="cocktail-item">
+    <h3>{{ cocktail.strDrink }}</h3>
   </div>
 </div>
-<div *ngIf="!cocktails || cocktails.length === 0">
-  <p>Loading cocktails...</p>
-</div>
+
+<pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
