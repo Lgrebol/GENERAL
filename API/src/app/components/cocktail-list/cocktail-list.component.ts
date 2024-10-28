@@ -1,3 +1,4 @@
+// src/app/components/cocktail-list/cocktail-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CocktailService } from '../../services/cocktail.service';
@@ -15,8 +16,7 @@ export class CocktailListComponent implements OnInit {
   constructor(private cocktailService: CocktailService) {}
 
   ngOnInit(): void {
-    this.cocktailService.getAllCocktails().subscribe((data: any) => {
-      console.log('Dades de tots els còctels:', data);
+    this.cocktailService.getCocktails().subscribe((data) => {
       this.cocktails = data.drinks;
     });
   }

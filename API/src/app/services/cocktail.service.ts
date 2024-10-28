@@ -6,11 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CocktailService {
-  private apiUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+  private apiUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita';
 
   constructor(private http: HttpClient) {}
 
-  getAllCocktails(): Observable<any> {
+  getCocktails(): Observable<any> {
     return this.http.get<any>(this.apiUrl);
   }
 }
