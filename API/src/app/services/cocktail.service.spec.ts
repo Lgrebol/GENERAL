@@ -15,25 +15,48 @@ describe('CocktailService', () => {
     httpMock = TestBed.inject(HttpTestingController);
   });
 
-  it('should fetch cocktails containing "margarita" in the name', () => {
-    const mockResponse = {
-      drinks: [
-        { strDrink: 'Margarita', strDrinkThumb: 'url1', idDrink: '1' },
-        { strDrink: 'Blue Margarita', strDrinkThumb: 'url2', idDrink: '2' },
-      ],
-    };
-  
-    service.getMargaritaCocktails().subscribe((data) => {
-      expect(data.drinks.length).toBe(2); // Accedeix directament a data.drinks
-      expect(data.drinks[0].strDrink).toContain('Margarita');
-    });
-  
-    const req = httpMock.expectOne('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita');
-    expect(req.request.method).toBe('GET');
-    req.flush(mockResponse);
-  }); 
-
   afterEach(() => {
     httpMock.verify();
+  });
+
+  it('should retrieve cocktails from the API via GET', () => {
+    const dummyCocktails = {
+      drinks: [
+        {
+          idDrink: '11000',
+          strDrink: 'Margarita',
+          strDrinkThumb: 'https://example.com/margarita.jpg',
+        },
+      ],
+    };
+
+    service.getCocktails().subscribe((cocktails) => {
+      expect(cocktails.drinks.length).toBe(1);
+      expect(cocktails.drinks[0].strDrink).toEqual('Margarita');
+    });
+
+    const request = httpMock.expectOne(`${service.apiUrl}/search.php?s=`);
+    expect(request.request.method).toBe('GET');
+    request.flush(dummyCocktails);
+  });
+
+  it('should retrieve a cocktail by ID from the API', () => {
+    const dummyCocktail = {
+      drinks: [
+        {
+          idDrink: '11000',
+          strDrink: 'Margarita',
+          strDrinkThumb: 'https://example.com/margarita.jpg',
+        },
+      ],
+    };
+
+    service.getCocktailById('11000').subscribe((cocktail) => {
+      expect(cocktail.drinks[0].strDrink).toEqual('Margarita');
+    });
+
+    const request = httpMock.expectOne(`${service.apiUrl}/lookup.php?i=11000`);
+    expect(request.request.method).toBe('GET');
+    request.flush(dummyCocktail);
   });
 });

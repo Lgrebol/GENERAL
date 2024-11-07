@@ -6,11 +6,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CocktailService {
-  private apiUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita';
+  private apiUrl = 'https://www.thecocktaildb.com/api/json/v1/1/';
 
   constructor(private http: HttpClient) {}
 
   getCocktails(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+    return this.http.get<any>(`${this.apiUrl}filter.php?c=Cocktail`);
+  }
+
+  getCocktailById(id: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}lookup.php?i=${id}`);
   }
 }

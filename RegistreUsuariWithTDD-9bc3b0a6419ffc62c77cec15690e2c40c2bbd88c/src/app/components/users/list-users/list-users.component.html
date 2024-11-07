@@ -1,0 +1,16 @@
+<p>list-users works!</p>
+@if (this.isError) {
+    <p class="error-message">{{this.errorMessage()}}</p>
+}
+
+<table>
+    
+        @for (cat of cats; track $index) {
+            <tr>
+                <td>{{ cat._id }}</td>
+                <td>{{ cat.mimetype }}</td>
+                <td>{{ cat.size }}</td>
+                <td>{{ this.showTags(cat) }}</td> 
+            </tr>
+        }
+</table>

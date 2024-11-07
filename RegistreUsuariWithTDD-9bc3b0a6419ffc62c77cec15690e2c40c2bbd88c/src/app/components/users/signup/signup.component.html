@@ -1,0 +1,24 @@
+<h1>Sign Up</h1>
+<label>Name:
+    <input type="text" [(ngModel)]="this.user.name" />
+</label>
+<label>Email:
+    <input type="email" [(ngModel)]="this.user.email" />
+</label>
+<label>Password:
+    <input type="password" [(ngModel)]="this.user.password" />
+</label>
+<label>Repeat password:
+    <input type="password" [(ngModel)]="repeatPassword"/>
+</label>
+<label>Language:
+    <select>
+        @for (language of this.user.languages; track language) {
+            <option [value]="language">{{language}}</option>
+        }
+    </select>
+</label>
+<button [disabled]="this.user.isDisabled(repeatPassword)"></button>
+@if (!this.user.isDisabled(repeatPassword)) {
+    <p>All data is correct message</p>
+}

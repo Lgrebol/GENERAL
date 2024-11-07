@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "VIDEOGAMES_API": {
+    "registreUsuarisWithTDD": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/videogames-api",
+            "outputPath": "dist/registre-usuaris-with-tdd",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -59,10 +59,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "VIDEOGAMES_API:build:production"
+              "buildTarget": "registreUsuarisWithTDD:build:production"
             },
             "development": {
-              "buildTarget": "VIDEOGAMES_API:build:development"
+              "buildTarget": "registreUsuarisWithTDD:build:development"
             }
           },
           "defaultConfiguration": "development"
