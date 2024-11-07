@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { By } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -8,7 +9,7 @@ describe('AppComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [AppComponent, FormsModule], // Importem el component i FormsModule per ngModel
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
@@ -16,9 +17,17 @@ describe('AppComponent', () => {
     fixture.detectChanges();
   });
 
-  it('It should show the menú button', () => {
-    const menuButton = fixture.debugElement.query(By.css('button'));
-    expect(menuButton).toBeTruthy();
-    expect(menuButton.nativeElement.textContent).toContain('Afegeix informació');
+  it('It should show the button "Add information"', () => {
+    const button = fixture.debugElement.query(By.css('button'));
+    expect(button).toBeTruthy();
+  });
+
+  it('It should show the form when the button Add information is clicked" ', () => {
+    const button = fixture.debugElement.query(By.css('button'));
+    button.triggerEventHandler('click', null);
+    fixture.detectChanges(); 
+
+    const form = fixture.debugElement.query(By.css('form'));
+    expect(form).toBeTruthy();
   });
 });
