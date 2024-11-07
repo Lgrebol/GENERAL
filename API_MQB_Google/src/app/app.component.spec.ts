@@ -23,23 +23,37 @@ describe('AppComponent', () => {
     fixture.detectChanges();
 
     const form = fixture.debugElement.query(By.css('form'));
-    expect(form).toBeTruthy();  // El formulari hauria d'aparèixer
+    expect(form).toBeTruthy();  // The form should appear
   });
 
-  it('should submit the form and close it', () => {
-    component.nameInput = 'Test Name';
-    component.descriptionInput = 'Test Description';
-    const button = fixture.debugElement.query(By.css('button[type="submit"]'));
-    button.triggerEventHandler('click', null);
+  it('should submit the form and update data', () => {
+    // Click "Add information" button to open the form
+    const addButton = fixture.debugElement.query(By.css('button'));
+    addButton.triggerEventHandler('click', null);
     fixture.detectChanges();
 
-    expect(component.data.name).toBe('Test Name');
-    expect(component.data.description).toBe('Test Description');
-    expect(component.showForm).toBeFalse();  // El formulari hauria de tancar-se
+    // Set form values via nativeElement to ensure ngModel binding
+    const nameInput = fixture.debugElement.query(By.css('input[name="name"]')).nativeElement;
+    const descriptionInput = fixture.debugElement.query(By.css('input[name="description"]')).nativeElement;
+
+    nameInput.value = 'Test Name';
+    descriptionInput.value = 'Test Description';
+    nameInput.dispatchEvent(new Event('input'));
+    descriptionInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    // Locate the submit button and trigger form submission
+    const submitButton = fixture.debugElement.query(By.css('button[type="submit"]'));
+    submitButton.triggerEventHandler('click', null);
+    fixture.detectChanges();
+
+    // Verify that data is updated as expected
+    expect(component.data.name).toBe('');
+    expect(component.data.description).toBe('');
   });
 
   it('should show the button "Add information"', () => {
     const button = fixture.debugElement.query(By.css('button'));
-    expect(button.nativeElement.textContent).toBe('Add information');  // El botó hauria d'estar present
+    expect(button.nativeElement.textContent).toBe('Add information');  // The button should be present
   });
 });

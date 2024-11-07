@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  showForm = false;  // Controla la visibilitat del formulari
+  showForm = false;  // Controls form visibility
   nameInput = '';
   descriptionInput = '';
   data = {
@@ -14,15 +14,15 @@ export class AppComponent {
     description: ''
   };
 
-  // Funció per mostrar o amagar el formulari
+  // Function to toggle form visibility
   toggleForm() {
     this.showForm = !this.showForm;
   }
 
-  // Funció per enviar el formulari
+  // Function to submit the form
   submitForm() {
     this.data.name = this.nameInput;
     this.data.description = this.descriptionInput;
-    this.showForm = false;  // Tanca el formulari després d'enviar-lo
+    this.showForm = false;  // Close form after submission
   }
 }
